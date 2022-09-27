@@ -5,12 +5,12 @@ import './Orders.css';
 const Orders = props => {
   const orderEls = props.orders.map(order => {
     return (
-      <div className="order">
+      <div className="order" key={order.id}>
         <h3>{order.name}</h3>
-        <ul className="ingredient-list" key={Date.now()}>
+        <ul className="ingredient-list" >
           {order.ingredients.map(ingredient => {
             console.log(ingredient)
-            return <li key={ingredient}>{ingredient}</li>
+            return <li key={`${ingredient}+1`}>{ingredient}</li>
           })}
         </ul>
       </div>
@@ -18,7 +18,7 @@ const Orders = props => {
   });
 
   return (
-    <section>
+    <section classname="prev-orders">
       { orderEls.length ? orderEls : <p>No orders yet!</p> }
     </section>
   )

@@ -9,7 +9,8 @@ class OrderForm extends Component {
     // this.props = props;
     this.state = {
       name: '',
-      ingredients: []
+      ingredients: [],
+      error: ''
     };
   }
 
@@ -36,13 +37,11 @@ return  fetch(`http://localhost:3001/api/v1/orders`,{
 }
 
   handleSubmit = e => {
+    let missingInfo = !this.state.name ? 'name' : 'ingredient'
     e.preventDefault();
-    const newOrder= {
-      key: Date.now(),
-     ...this.state
-    }
-    this.props.addOrder(newOrder)
-    this.postOrder()
+    this.state.name && this.state.ingredients.length ? this.postOrder()
+    && this.props.addOrder({name: this.state.name, ingredients: this.state.ingredients}):
+    this.setState({error: `You're missing ${missingInfo}, please fill out missing info`})  
     this.clearInputs();
   }
 
@@ -55,7 +54,7 @@ return  fetch(`http://localhost:3001/api/v1/orders`,{
     const ingredientButtons = possibleIngredients.map(ingredient => {
       console.log(ingredient)
       return (
-        <button className='ing-btn'  key={ingredient+1} name={ingredient} value={ingredient} onClick={e=> this.handleIngredientChange(e)}>
+        <button className='ing-btn'  key={`${ingredient}+1`} name={ingredient} value={ingredient} onClick={e=> this.handleIngredientChange(e)}>
           {ingredient}
         </button>
       )
@@ -76,11 +75,10 @@ return  fetch(`http://localhost:3001/api/v1/orders`,{
         <p>Order: { this.state.ingredients.join(', ') || 'Nothing selected' }</p>
        
         <button className='submit-btn'
-        
-        
-        onClick={e => this.handleSubmit(e)}>
+        onClick={e => this.handleSubmit(e)} >
           Submit Order
         </button>
+        <p className="error">{this.state.error}</p>
       </form>
     )
   }
