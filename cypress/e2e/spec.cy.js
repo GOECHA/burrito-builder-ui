@@ -41,7 +41,7 @@ describe('Burrito order user flows', () => {
     cy.wait("@orders");
     cy.get(".order").should("have.length", 3);
     cy.get(".error").should("contain", "");
-    cy.get('input[type="text"]').type("Josh");
+    cy.get('input[type="text"]').type("Chantal");
     cy.get(".submit-btn").click();
     cy.get(".error").should(
       "contain",

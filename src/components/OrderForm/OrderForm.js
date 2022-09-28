@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-// import './OrderForm.css'
-// import { postOrders } from '../../apiCalls'
-// import {getOrders} from '../../apiCalls';
+
 
 class OrderForm extends Component {
   constructor(props) {
     super(props);
-    // this.props = props;
     this.state = {
       name: '',
       ingredients: [],
