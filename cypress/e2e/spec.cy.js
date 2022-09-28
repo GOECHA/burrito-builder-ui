@@ -1,4 +1,4 @@
-describe('Planet flight reservation user flows', () => {
+describe('Burrito order user flows', () => {
   beforeEach(() => {
     cy.intercept('GET', 'http://localhost:3001/api/v1/orders', {
       fixture: "/burrito_data.json",
@@ -9,8 +9,37 @@ describe('Planet flight reservation user flows', () => {
     cy.get('h1')
     .contains('Burrito Builder')
   })
-  it('should be able to see button that submits an order', () => {
+  it('should be able to see button that submits neOrder', () => {
     cy.get('.submit-btn')
     .should('be.visible')
   })
+  it("should render burrito form", () => {
+    cy.get("form").should("contain", "Submit Order");
+    cy.get("form").should("contain", "lettuce");
+    cy.get("form").should("contain", "Nothing selected");
+    cy.get("button").should("have.length", 13);
+  });
+
+  it("should render previous orders", () => {
+    cy.get(".order").should("contain", "Pat");
+    cy.get(".order").should("contain", "Sam");
+    cy.get(".order").should("contain", "Alex");
+  });
+
+
+  it("should be able to place an order", () => {
+    cy.intercept("POST", "http://localhost:3001/api/v1/orders").as("order");
+    cy.visit("http://localhost:3000");
+    cy.get('input[type="text"]').type("Chantal");
+    cy.get("button").first().click();
+    cy.get("p").should("contain", "Order: beans");
+    cy.get(".submit-btn").click();
+    cy.wait("@order").then(({ response }) => {
+      expect(response.statusCode).to.eq(201);
+      expect(response.body.name).to.eq("Chantal");
+      expect(response.body.ingredients).to.deep.eq(["beans"]);
+    });
+    cy.get("h3").last().should("contain", "Chantal");
+    cy.get(".order").last().should("contain", "beans");
+  });
 });

@@ -18,7 +18,7 @@ class App extends Component {
    componentDidMount = () => {
     getOrders('/orders')
     .then(data=> {
-      console.log(`data`, data)
+      console.log(`data`, data.orders)
       this.setState({orders: data.orders})
     })   
   }

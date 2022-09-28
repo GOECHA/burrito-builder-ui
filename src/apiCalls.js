@@ -1,4 +1,4 @@
-// import { getAllByText } from "@testing-library/react";
+
 
 export const getOrders = async () => {
   try {
@@ -11,16 +11,3 @@ export const getOrders = async () => {
 };
 
 
-// export const getOrders  = (id, name, ingredients) => {
-//   return fetch(`http://localhost:3001/api/v1/orders`,{
-//        method: "POST",
-//        headers: {'Content-Type': 'application/json'},
-//        body: JSON.stringify({id: id, name: name, ingredients: ingredients}),
-//      })
-//    .then((response) => response.json())
-//  }
-
-// fetch('https://jsonplaceholder.typicode.com/posts', requestOptions)
-//         .then(response => response.json())
-//         .then(data => this.setState({ postId: data.id }));
-// }
